@@ -1,7 +1,12 @@
 from django import forms
+from .models import Post, Comment
 
-class StudentForm(forms.Form):
-    first_name = forms.CharField(max_length=20)
-    last_name = forms.CharField(max_length=20)
-    email_id = forms.EmailField()
-    
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ('title','text','reference')
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('author','text')
