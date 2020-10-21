@@ -1,9 +1,13 @@
 from django.urls import path
 from . import views
-
+from .views import PostDetail
 urlpatterns = [
-    path('', views.post_list, name='post_list'),
-    path('post/<int:pk>/', views.post_detail, name='post_detail'),
+    path('', views.post_list, name='post_list'),          # Function based View (FBW)
+    # path('', PostList.as_view(), name='post_list'),         # Class based view (CBW)
+
+    # path('post/<int:pk>/', views.post_detail, name='post_detail'),            # FBW
+    path('post/<int:pk>/', PostDetail.as_view(), name = 'post_detail'),         # CBW
+
     path('post/new/', views.post_new, name='post_new'),
     path('post/<int:pk>/edit/', views.post_edit, name='post_edit'),
     path('drafts/', views.post_draft_list , name = 'post_draft_list'),

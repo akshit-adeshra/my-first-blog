@@ -3,35 +3,17 @@ from django.utils import timezone
 from .models import Post, Comment
 from .forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
-from django.http import request
+
 # Create your views here.
 
-# Function based View (FBW)
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date',)
     return render(request,'demo/post_list.html', {'posts':posts})
 
-# Class based view (CBW) - "ListView"
-# class PostList(ListView):
-#     model = Post
-#     template_name = "demo/post_list.html"
 
-#     def get_queryset(self):
-#         query_set = self.model.objects.filter(published_date__lte=timezone.now()).order_by('-published_date',)
-#         return query_set()
-
-# Function based View (FBW)
-# def post_detail(request, pk):
-#     post = get_object_or_404(Post, pk=pk)
-#     return render(request, 'demo/post_detail.html', {'post': post})
-
-# Class based view (CBW) - DetailView
-class PostDetail(DetailView):
-    model = Post
-    template_name = 'demo/post_detail.html'
+def post_detail(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    return render(request, 'demo/post_detail.html', {'post': post})
 
 @login_required
 def post_new(request):

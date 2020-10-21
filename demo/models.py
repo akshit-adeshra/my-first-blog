@@ -5,12 +5,12 @@ from django.conf import settings
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, help_text='Select the Author')
     BLOG_CATEGORY = (
-        ('01','GOT'),
-        ('02', 'Suits'),
-        ('03', 'Dark'),
-        ('04','Breaking Bad'),
+        ('GOT','GOT'),
+        ('Suits', 'Suits'),
+        ('Dark', 'Dark'),
+        ('Breaking Bad','Breaking Bad'),
     )
-    category = models.CharField(max_length=3, choices = BLOG_CATEGORY, default = 'O1')
+    category = models.CharField(max_length=20, choices = BLOG_CATEGORY, default = 'O1')
     title = models.CharField(max_length = 200, help_text = 'Enter title')
     text = models.TextField(help_text = 'Enter text')
     created_date = models.DateTimeField(default = timezone.now,)
