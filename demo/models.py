@@ -12,7 +12,7 @@ class Post(models.Model):
         ('Money Heist', 'Money Heist'),
     )
     category = models.CharField(max_length=20, choices = BLOG_CATEGORY, default = 'Null')
-    title = models.CharField(max_length = 200, help_text = 'Enter title')
+    title = models.CharField(max_length = 200, help_text = 'Enter title', unique=True)
     text = models.TextField(help_text = 'Enter text')
     created_date = models.DateTimeField(default = timezone.now,)
     published_date = models.DateTimeField(null = True, blank = True)
@@ -34,8 +34,8 @@ class Comment(models.Model):
     post = models.ForeignKey('demo.Post', on_delete=models.CASCADE, related_name='comments')
     author = models.CharField(max_length=200)
     text = models.TextField()
-    created_date = models.DateTimeField(default = timezone.now)
-    approved_comment = models.BooleanField(default=False)
+    created_date = models.DateTimeField(default = timezone.now, blank=True)
+    approved_comment = models.BooleanField(default=False, blank=True)
 
     def approve(self):
         self.approved_comment = True

@@ -12,7 +12,14 @@ from django.http import request
 # Function based View (FBW)
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date',)
-    return render(request,'demo/post_list.html', {'posts':posts})
+    num_visits = request.session.get('num_visits',0)
+    request.session['num_visits'] = num_visits + 1
+
+    context = {
+        'posts': posts,
+        'num_visits': num_visits,
+    }
+    return render(request,'demo/post_list.html', context = context)
 
 # Class based view (CBW) - "ListView"
 # class PostList(ListView):
