@@ -9,8 +9,9 @@ class Post(models.Model):
         ('Suits', 'Suits'),
         ('Dark', 'Dark'),
         ('Breaking Bad','Breaking Bad'),
+        ('Money Heist', 'Money Heist'),
     )
-    category = models.CharField(max_length=20, choices = BLOG_CATEGORY, default = 'O1')
+    category = models.CharField(max_length=20, choices = BLOG_CATEGORY, default = 'Null')
     title = models.CharField(max_length = 200, help_text = 'Enter title')
     text = models.TextField(help_text = 'Enter text')
     created_date = models.DateTimeField(default = timezone.now,)
@@ -23,6 +24,11 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        unique_together = ("author", "title")   
+        # "unique_together" will make sure that the author and the title of the post remains unique, while entering the data.
+        # here, if the same user(author) tries to post a blog with the same title it'll give an error
 
 class Comment(models.Model):
     post = models.ForeignKey('demo.Post', on_delete=models.CASCADE, related_name='comments')
